@@ -1,0 +1,800 @@
+<!DOCTYPE html>
+<html>
+<title>Efficient Water Management System</title>
+<meta charset="UTF-8">
+<meta http-equiv="refresh" content="5">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-animate.js"></script>
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/highcharts-more.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/highcharts-more.js"></script>
+<script src="https://code.highcharts.com/modules/solid-gauge.js"></script>
+<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+<style>
+body, html {
+    height: 100%;
+    font-family: "Montserrat", sans-serif;
+    color: black;
+}
+.bgimg {
+    background-position: center;
+    background-size: cover;
+    background-image: url("main.jpg");
+    min-height: 55%;
+}
+.menu {
+    display: none;
+}
+#ClassDiagram {
+  margin-left:100px;
+  margin-right:100px;
+}
+#thermometer {
+  margin-top:25px;
+}
+
+</style>
+<body>
+
+<!-- Links (sit on top) -->
+<div class="w3-top">
+  <div class="w3-row w3-padding w3-black">
+    <div class="w3-col s3">
+      <a href="#" class="w3-button w3-block w3-black">HOME</a>
+    </div>
+    <div class="w3-col s3">
+      <a href="#menu" class="w3-button w3-block w3-black">ANALYTICS</a>
+    </div>
+    <div class="w3-col s3">
+      <a href="#about" class="w3-button w3-block w3-black">ABOUT</a>
+    </div>
+    <div class="w3-col s3">
+      <a href="#controls" class="w3-button w3-block w3-black">CONTROLS</a>
+    </div>
+  </div>
+  </div>
+</div>
+
+<!-- Header with image -->
+<header class="bgimg w3-display-container w3-grayscale-min" id="home">
+  <div class="w3-display-bottomleft w3-center w3-padding-large w3-hide-small">
+    <span class="w3-tag"></span>
+  </div>
+  <div class="w3-display-middle w3-center">
+    <span id="mainhead" class="w3-text-white" style="font-size:70px">Efficient Water Management System</span>
+  </div>
+  <div class="w3-display-bottomright w3-center w3-padding-large">
+    <span class="w3-text-white">GROUP 25--UG2(IIITS)</span>
+  </div>
+</header>
+<h5 class="w3-center w3-padding-48"><span class="w3-tag w3-wide">PRESENT READINGS</span></h5>
+<div style="width:100% height: 400px; margin-left:177px;">
+    <div id="container-temp" style="width: 300px; height: 200px; float: left"></div>
+    <div id="container-humi" style="width: 300px; height: 200px; float: left"></div>
+    <div id="container-moi" style="width: 300px; height: 200px; float: left"></div>
+    <div id="container-level" style="width: 300px; height: 200px; float: left"></div>
+</div>
+
+<!-- Add a background color and large text to the whole page -->
+<!--<div class="w3-sand w3-grayscale w3-large">-->
+
+<!-- About Container -->
+<div class="w3-container" id="about">
+  <div class="w3-content" style="max-width:700px">
+    <h5 class="w3-center w3-padding-64"><span class="w3-tag w3-wide">ABOUT OUR PROJECT</span></h5>
+    <p>Through our project, we aim to come up with web GIS based IoT solutions for efficient water management by applying the concepts of Relational Databases and Object-Oriented Programming.</p>
+
+    <p></p>
+    <div class="w3-panel w3-leftbar w3-light-grey">
+      <p><i>"Save water, it will save you later."</i></p>
+    </div>
+<center>
+    
+</center>
+  </div>
+</div>
+
+<!-- Menu Container -->
+<div class="w3-container" id="menu" width="100%">
+  <div class="w3-content" width="90%">
+ 
+    <h5 class="w3-center w3-padding-48"><span class="w3-tag w3-wide">SENSOR READINGS</span></h5>
+  
+    <div class="w3-row w3-center w3-card-2 w3-padding" >
+      <a href="javascript:void(0)" onclick="openMenu(event, 'Temperature');" id="myLink">
+        <div class="w3-col s6 tablink" width="100%">Temperature & Humidity</div>
+      </a>
+      <a href="javascript:void(0)" onclick="openMenu(event, 'soilmoisture');">
+        <div class="w3-col s6 tablink">Soil moisture</div>
+      </a>
+    </div>
+
+    <div id="Temperature" class="w3-container menu w3-padding-48 w3-card-2">
+      <center>
+        <table>
+        <tr>
+        <td border="50px" id="container1" style="min-width: 310px; max-width: 400px; height: 300px; margin: 0 auto;"></td>
+        <td border="50px" id="container2" style="min-width: 310px; max-width: 400px; height: 300px; margin: 0 auto;"></td>
+        </tr>
+      </table></center>
+      <br><br><br>
+      <hr>
+      <div id="chartContainer" style="height: 370px; width: 100%;"></div>
+    </div>
+
+    <div id="soilmoisture" class="w3-container menu w3-padding-48 w3-card-2">
+            <center>
+        <table>
+        <tr>
+        <td id="container3" style="min-width: 310px; max-width: 400px; height: 300px; margin: 0 auto;"></td>
+        </tr>
+      </table></center>
+    </div>
+
+<!-- End page content -->
+</div>
+
+<div class="w3-container" id="controls" width="200%">
+  <div class="w3-content" width="90%">
+    <h5 class="w3-center w3-padding-48"><span class="w3-tag w3-wide">CONTROL TOWER</span></h5>
+    <video width="100%" height="540" autoplay loop>
+    <source src="C:\Users\rahul\Downloads\leafs_and_drops_02.mp4" type="video/mp4" />
+    </video>  
+  </div>
+</div>  
+
+
+
+<script>
+// Tabbed Menu
+function openMenu(evt, menuName) {
+  var i, x, tablinks;
+  x = document.getElementsByClassName("menu");
+  for (i = 0; i < x.length; i++) {
+     x[i].style.display = "none";
+  }
+  tablinks = document.getElementsByClassName("tablink");
+  for (i = 0; i < x.length; i++) {
+     tablinks[i].className = tablinks[i].className.replace(" w3-dark-grey", "");
+  }
+  document.getElementById(menuName).style.display = "block";
+  evt.currentTarget.firstElementChild.className += " w3-dark-grey";
+}
+document.getElementById("myLink").click();
+</script>
+<script>
+Highcharts.chart('container1', {
+
+    chart: {
+        type: 'gauge',
+        plotBackgroundColor: null,
+        plotBackgroundImage: null,
+        plotBorderWidth: 0,
+        plotShadow: false
+    },
+
+    title: {
+        text: 'temperature readings'
+    },
+
+    pane: {
+        startAngle: -150,
+        endAngle: 150,
+        background: [{
+            backgroundColor: {
+                linearGradient: { x1: 0, y1: 0, x2: 0, y2: 1 },
+                stops: [
+                    [0, '#FFF'],
+                    [1, '#333']
+                ]
+            },
+            borderWidth: 0,
+            outerRadius: '109%'
+        }, {
+            backgroundColor: {
+                linearGradient: { x1: 0, y1: 0, x2: 0, y2: 1 },
+                stops: [
+                    [0, '#333'],
+                    [1, '#FFF']
+                ]
+            },
+            borderWidth: 1,
+            outerRadius: '107%'
+        }, {
+            // default background
+        }, {
+            backgroundColor: '#DDD',
+            borderWidth: 0,
+            outerRadius: '105%',
+            innerRadius: '103%'
+        }]
+    },
+
+    // the value axis
+    yAxis: {
+        min: 0,
+        max: 60,
+
+        minorTickInterval: 'auto',
+        minorTickWidth: 1,
+        minorTickLength: 10,
+        minorTickPosition: 'inside',
+        minorTickColor: '#666',
+
+        tickPixelInterval: 30,
+        tickWidth: 2,
+        tickPosition: 'inside',
+        tickLength: 10,
+        tickColor: '#666',
+        labels: {
+            step: 2,
+            rotation: 'auto'
+        },
+        title: {
+            text: 'Celsius'
+        },
+        plotBands: [{
+            from: 0,
+            to: 30,
+            color: '#55BF3B' // green
+        }, {
+            from: 30,
+            to: 50,
+            color: '#DDDF0D' // yellow
+        }, {
+            from: 50,
+            to: 60,
+            color: '#DF5353' // red
+        }]
+    },
+
+  series: [{
+     name: 'temperature',
+      data: [parseInt({{sensor1}})],
+       tooltip: {
+        valueSuffix: 'Celsius'
+       }
+    }]
+
+},
+// Add some life
+function (chart) {
+    if (!chart.renderer.forExport) {
+        setInterval(function () {
+            var point = chart.series[0].points[0],
+                newVal,
+              //  inc = 40;
+
+            newVal = parseInt({{sensor1}});
+            point.update(newVal);
+
+        }, 3000);
+    }
+});
+</script>
+<script>
+Highcharts.chart('container2', {
+
+    chart: {
+        type: 'gauge',
+        plotBackgroundColor: null,
+        plotBackgroundImage: null,
+        plotBorderWidth: 0,
+        plotShadow: false
+    },
+
+    title: {
+        text: 'Humidity readings'
+    },
+
+    pane: {
+        startAngle: -150,
+        endAngle: 150,
+        background: [{
+            backgroundColor: {
+                linearGradient: { x1: 0, y1: 0, x2: 0, y2: 1 },
+                stops: [
+                    [0, '#FFF'],
+                    [1, '#333']
+                ]
+            },
+            borderWidth: 0,
+            outerRadius: '109%'
+        }, {
+            backgroundColor: {
+                linearGradient: { x1: 0, y1: 0, x2: 0, y2: 1 },
+                stops: [
+                    [0, '#333'],
+                    [1, '#FFF']
+                ]
+            },
+            borderWidth: 1,
+            outerRadius: '107%'
+        }, {
+            // default background
+        }, {
+            backgroundColor: '#DDD',
+            borderWidth: 0,
+            outerRadius: '105%',
+            innerRadius: '103%'
+        }]
+    },
+
+    // the value axis
+    yAxis: {
+        min: 0,
+        max: 200,
+
+        minorTickInterval: 'auto',
+        minorTickWidth: 1,
+        minorTickLength: 10,
+        minorTickPosition: 'inside',
+        minorTickColor: '#666',
+
+        tickPixelInterval: 30,
+        tickWidth: 2,
+        tickPosition: 'inside',
+        tickLength: 10,
+        tickColor: '#666',
+        labels: {
+            step: 2,
+            rotation: 'auto'
+        },
+        title: {
+            text: 'g/cc'
+        },
+        plotBands: [{
+            from: 0,
+            to: 70,
+            color: '#55BF3B' // green
+        }, {
+            from: 70,
+            to: 130,
+            color: '#DDDF0D' // yellow
+        }, {
+            from: 130,
+            to: 200,
+            color: '#DF5353' // red
+        }]
+    },
+
+  series: [{
+     name: 'Humidity',
+      data: [parseInt({{sensor2}})],
+       tooltip: {
+        valueSuffix: 'g/cc'
+       }
+    }]
+
+},
+// Add some life
+function (chart) {
+    if (!chart.renderer.forExport) {
+        setInterval(function () {
+            var point = chart.series[0].points[0],
+                newVal,
+              //  inc = 40;
+
+            newVal = parseInt({{sensor2}});
+            point.update(newVal);
+
+        }, 3000);
+    }
+});
+</script>
+<script>
+Highcharts.chart('container3', {
+
+    chart: {
+        type: 'gauge',
+        plotBackgroundColor: null,
+        plotBackgroundImage: null,
+        plotBorderWidth: 0,
+        plotShadow: false
+    },
+
+    title: {
+        text: 'Soil moisture readings'
+    },
+
+    pane: {
+        startAngle: -150,
+        endAngle: 150,
+        background: [{
+            backgroundColor: {
+                linearGradient: { x1: 0, y1: 0, x2: 0, y2: 1 },
+                stops: [
+                    [0, '#FFF'],
+                    [1, '#333']
+                ]
+            },
+            borderWidth: 0,
+            outerRadius: '109%'
+        }, {
+            backgroundColor: {
+                linearGradient: { x1: 0, y1: 0, x2: 0, y2: 1 },
+                stops: [
+                    [0, '#333'],
+                    [1, '#FFF']
+                ]
+            },
+            borderWidth: 1,
+            outerRadius: '107%'
+        }, {
+            // default background
+        }, {
+            backgroundColor: '#DDD',
+            borderWidth: 0,
+            outerRadius: '105%',
+            innerRadius: '103%'
+        }]
+    },
+
+    // the value axis
+    yAxis: {
+        min: 0,
+        max: 200,
+
+        minorTickInterval: 'auto',
+        minorTickWidth: 1,
+        minorTickLength: 10,
+        minorTickPosition: 'inside',
+        minorTickColor: '#666',
+
+        tickPixelInterval: 30,
+        tickWidth: 2,
+        tickPosition: 'inside',
+        tickLength: 10,
+        tickColor: '#666',
+        labels: {
+            step: 2,
+            rotation: 'auto'
+        },
+        title: {
+            text: 'g/cc'
+        },
+        plotBands: [{
+            from: 0,
+            to: 70,
+            color: '#55BF3B' // green
+        }, {
+            from: 70,
+            to: 130,
+            color: '#DDDF0D' // yellow
+        }, {
+            from: 130,
+            to: 200,
+            color: '#DF5353' // red
+        }]
+    },
+
+  series: [{
+     name: 'Soil moisture',
+      data: [parseInt({{sensor3}})],
+       tooltip: {
+        valueSuffix: 'g/cc'
+       }
+    }]
+
+},
+// Add some life
+function (chart) {
+    if (!chart.renderer.forExport) {
+        setInterval(function () {
+            var point = chart.series[0].points[0],
+                newVal,
+              //  inc = 40;
+
+            newVal =parseInt({{sensor3}});
+            point.update(newVal);
+
+        }, 3000);
+    }
+});
+</script>
+<script >
+ var gaugeOptions = {
+
+    chart: {
+        type: 'solidgauge'
+    },
+
+    title: null,
+
+    pane: {
+        center: ['50%', '85%'],
+        size: '140%',
+        startAngle: -90,
+        endAngle: 90,
+        background: {
+            backgroundColor: (Highcharts.theme && Highcharts.theme.background2) || '#EEE',
+            innerRadius: '60%',
+            outerRadius: '100%',
+            shape: 'arc'
+        }
+    },
+
+    tooltip: {
+        enabled: false
+    },
+
+    // the value axis
+    yAxis: {
+        stops: [
+            [0.1, '#55BF3B'], // green
+            [0.5, '#DDDF0D'], // yellow
+            [0.9, '#DF5353'] // red
+        ],
+        lineWidth: 0,
+        minorTickInterval: null,
+        tickAmount: 2,
+        title: {
+            y: -70
+        },
+        labels: {
+            y: 16
+        }
+    },
+
+    plotOptions: {
+        solidgauge: {
+            dataLabels: {
+                y: 5,
+                borderWidth: 0,
+                useHTML: true
+            }
+        }
+    }
+};
+
+// The speed gauge
+var charttemp = Highcharts.chart('container-temp', Highcharts.merge(gaugeOptions, {
+    yAxis: {
+        min: 0,
+        max: 60,
+        title: {
+            text: 'Temperature'
+        }
+    },
+
+    credits: {
+        enabled: false
+    },
+
+    series: [{
+        name: 'Temperature',
+        data: [parseInt({{sensor1}})],
+        dataLabels: {
+            format: '<div style="text-align:center"><span style="font-size:25px;color:' +
+                ((Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black') + '">{y}</span><br/>' +
+                   '<span style="font-size:12px;color:silver">Celcius</span></div>'
+        },
+        tooltip: {
+            valueSuffix: ' C'
+        }
+    }]
+
+}));
+
+var charthumi = Highcharts.chart('container-humi', Highcharts.merge(gaugeOptions, {
+    yAxis: {
+        min: 0,
+        max: 200,
+        title: {
+            text: 'Humidity'
+        }
+    },
+
+    credits: {
+        enabled: false
+    },
+
+    series: [{
+        name: 'Humidity',
+        data: [parseInt({{sensor2}})],
+        dataLabels: {
+            format: '<div style="text-align:center"><span style="font-size:25px;color:' +
+                ((Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black') + '">{y}</span><br/>' +
+                   '<span style="font-size:12px;color:silver">g/cm3</span></div>'
+        },
+        tooltip: {
+            valueSuffix: ' g/cm3' 
+        } 
+    }] 
+ 
+})); 
+ 
+var chartmoi = Highcharts.chart('container-moi', Highcharts.merge(gaugeOptions, {
+    yAxis: {
+        min: 0,
+        max: 200,
+        title: {
+            text: 'soil moisture'
+        }
+    },
+
+    credits: {
+        enabled: false
+    },
+
+    series: [{
+        name: 'soilmoisture',
+        data: [parseInt({{sensor3}})],
+        dataLabels: {
+            format: '<div style="text-align:center"><span style="font-size:25px;color:' +
+                ((Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black') + '">{y}</span><br/>' +
+                   '<span style="font-size:12px;color:silver">g/cm3</span></div>'
+        },
+        tooltip: {
+            valueSuffix: ' g/cm3'
+        }
+    }]
+
+}));
+var chartlevel = Highcharts.chart('container-level', Highcharts.merge(gaugeOptions, {
+    yAxis: {
+        min: 0,
+        max: 500,
+        title: {
+            text: 'water-level'
+        }
+    },
+
+    credits: {
+        enabled: false
+    },
+
+    series: [{
+        name: 'waterlevel',
+        data: [parseInt({{sensor4}})],
+        dataLabels: {
+            format: '<div style="text-align:center"><span style="font-size:25px;color:' +
+                ((Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black') + '">{y}</span><br/>' +
+                   '<span style="font-size:12px;color:silver">cm</span></div>'
+        },
+        tooltip: {
+            valueSuffix: 'cm'
+        }
+    }]
+
+}));
+// Bring life to the dials
+setInterval(function () {
+    // Speed
+    var point,
+        newVal,
+        inc;
+
+    if (charttemp) {
+        point = charttemp.series[0].points[0];
+        newVal =parseInt({{sensor1}});
+        point.update(newVal);
+    }
+  if (chartmoi) {
+        point = chartmoi.series[0].points[0];
+        newVal =parseInt({{sensor2}});
+        point.update(newVal);
+    }
+    // RPM
+    if (charthumi) {
+        point = charthumi.series[0].points[0];
+        newVal =parseInt({{sensor3}});
+        point.update(newVal);
+    }
+    if (chartlevel) {
+        point = chartlevel.series[0].points[0];
+        newVal =parseInt({{sensor4}});
+        point.update(newVal);
+    }
+}, 2000);
+</script>
+<!--graph--------------------------------------humidity temprature------------- -->
+<script>
+window.onload = function () {
+
+var dataPoints1 = [];
+var dataPoints2 = [];
+
+var chart = new CanvasJS.Chart("chartContainer", {
+  zoomEnabled: true,
+  title: {
+    text: "Temperature and Humidity Values"
+  },
+  axisX: {
+    title: "<-------------------Time(t)-------------------------->"
+  },
+  axisY:{
+    prefix: "",
+    includeZero: false
+  }, 
+  toolTip: {
+    shared: true
+  },
+  legend: {
+    cursor:"pointer",
+    verticalAlign: "top",
+    fontSize: 22,
+    fontColor: "dimGrey",
+    itemclick : toggleDataSeries
+  },
+  data: [{ 
+    type: "line",
+    xValueType: "dateTime",
+    yValueFormatString: "####.00",
+    xValueFormatString: "hh:mm:ss TT",
+    showInLegend: true,
+    name: "Temperature",
+    dataPoints: dataPoints1
+    },
+    {       
+      type: "line",
+      xValueType: "dateTime",
+      yValueFormatString: "####.00",
+      showInLegend: true,
+      name: "Humidity" ,
+      dataPoints: dataPoints2
+  }]
+});
+
+function toggleDataSeries(e) {
+  if (typeof(e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
+    e.dataSeries.visible = false;
+  }
+  else {
+    e.dataSeries.visible = true;
+  }
+  chart.render();
+}
+
+var updateInterval = 3000;
+// initial value
+var yValue1 = 0; 
+var yValue2 = 5;
+
+var time = new Date;
+// starting at 9.30 am
+time.setHours(time.getHours());
+time.setMinutes(time.getMinutes());
+time.setSeconds(time.getSeconds());
+time.setMilliseconds(time.getMilliseconds());
+
+function updateChart(count) {
+  count = count || 1;
+  var deltaY1, deltaY2;
+  for (var i = 0; i < count; i++) {
+    time.setTime(time.getTime()+ updateInterval);
+    deltaY1 = .5 + Math.random() *(-.5-.5);
+    deltaY2 = .5 + Math.random() *(-.5-.5);
+
+  // adding random value and rounding it to two digits. 
+  yValue1 = Math.round((yValue1 + deltaY1)*100)/100;
+  yValue2 = Math.round((yValue2 + deltaY2)*100)/100;
+
+  // pushing the new values
+  dataPoints1.push({
+    x: time.getTime(),
+    y: yValue1
+  });
+  dataPoints2.push({
+    x: time.getTime(),
+    y: yValue2
+  });
+  }
+
+  // updating legend text with  updated with y Value 
+  chart.options.data[0].legendText = " Temperature  " + yValue1;
+  chart.options.data[1].legendText = " Humidity   " + yValue2; 
+  chart.render();
+}
+// generates first set of dataPoints 
+updateChart(1); 
+setInterval(function(){updateChart()}, updateInterval);
+
+}
+</script>
+</body>
+</html>          
